@@ -20,7 +20,7 @@ For VALID hotel booking requests ONLY, respond with structured JSON with these k
 
  
  
-If any data is missing, use null or empty array values.
+If any data is missing, use null values.
 If the user is asking for a specific hotel, return the hotel name.
 
 Your response MUST ONLY CONTAIN VALID JSON with no explanations, preambles, or additional text.
