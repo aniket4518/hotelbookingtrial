@@ -34,7 +34,7 @@ async function scrapeBooking({ userId, UserModel }) {
   let hotels = [];
   try {
     // Try to find hotel cards by a more generic selector (e.g., hotel name input box means no results)
-    await page.waitForSelector('[data-testid="property-card"]', { timeout: 15000 });
+    await page.waitForSelector('[data-testid="property-card"]', { timeout:45000 });
     hotels = await page.$$eval('[data-testid="property-card"]', (cards) => {
       return cards.map((card) => {
         const name = card.querySelector('[data-testid="title"]')?.innerText.trim();

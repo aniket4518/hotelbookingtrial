@@ -14,6 +14,11 @@ function App() {
   const [password, setPassword] = useState('');
   const [showLoginAlert, setShowLoginAlert] = useState(false);
   const [accessToken, setAccessToken] = useState('');
+  // Add new state variables for registration
+  const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [address, setAddress] = useState('');
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -41,13 +46,13 @@ function App() {
       // Debug: log headers to verify
       console.log('Sending headers:', headers);
 
-      // JD: line 33 console run this time
+       
       console.log('JD DEBUG: handleSend called at', new Date().toISOString());
 
       const res = await fetch('http://localhost:5001/askllm', {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify({ prompt: input }), // <-- fix: use 'prompt'
+        body: JSON.stringify({ prompt: input }), 
         credentials: 'include'
       });
 
@@ -143,6 +148,45 @@ function App() {
     }
   };
 
+  // Add registration handler
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim() || !password.trim() || !mobile.trim() || !address.trim()) {
+      setLoginError('All fields are required');
+      return;
+    }
+    setLoginError('');
+    try {
+      const res = await fetch('http://localhost:5001/user/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          name: name.trim(), 
+          email: email.trim(), 
+          password: password,
+          mobile: mobile.trim(),
+          address: address.trim()
+        })
+      });
+      const data = await res.json();
+      
+      if (res.ok) {
+        // Reset form and show success
+        setName('');
+        setEmail('');
+        setPassword('');
+        setMobile('');
+        setAddress('');
+        setLoginError('Registration successful! Please login.');
+        setIsLogin(true); // Switch to login form
+      } else {
+        setLoginError(data.message || 'Registration failed');
+      }
+    } catch (err) {
+      setLoginError('Could not reach registration server');
+    }
+  };
+
   if (!username) {
     return (
       <div style={{
@@ -155,60 +199,178 @@ function App() {
         background: '#fafbfc',
         textAlign: 'center'
       }}>
-        <h2>Login to Gemini LLM Chat</h2>
-        <form onSubmit={handleLogin} style={{marginTop: 24}}>
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            style={{
-              width: '100%',
-              padding: 10,
-              borderRadius: 20,
-              border: '1px solid #ccc',
-              outline: 'none',
-              fontSize: 16,
-              marginBottom: 16
-            }}
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Enter your password"
-            style={{
-              width: '100%',
-              padding: 10,
-              borderRadius: 20,
-              border: '1px solid #ccc',
-              outline: 'none',
-              fontSize: 16,
-              marginBottom: 16
-            }}
-          />
-          <button
-            type="submit"
-            style={{
-              width: '100%',
-              padding: '10px 0',
-              borderRadius: 20,
-              border: 'none',
-              background: '#4f8cff',
-              color: '#fff',
-              fontWeight: 'bold',
-              fontSize: 16,
-              cursor: 'pointer'
-            }}
-          >
-            Login
-          </button>
-          {loginError && (
-            <div style={{color: 'red', marginTop: 12, fontSize: 15}}>
-              {loginError}
-            </div>
-          )}
-        </form>
+        <h2>{isLogin ? 'Login to' : 'Register for'} Gemini LLM Chat</h2>
+        
+        {isLogin ? (
+          <form onSubmit={handleLogin} style={{marginTop: 24}}>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 20,
+                border: '1px solid #ccc',
+                outline: 'none',
+                fontSize: 16,
+                marginBottom: 16
+              }}
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 20,
+                border: '1px solid #ccc',
+                outline: 'none',
+                fontSize: 16,
+                marginBottom: 16
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+                padding: '10px 0',
+                borderRadius: 20,
+                border: 'none',
+                background: '#4f8cff',
+                color: '#fff',
+                fontWeight: 'bold',
+                fontSize: 16,
+                cursor: 'pointer',
+                marginBottom: 10
+              }}
+            >
+              Login
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleRegister} style={{marginTop: 24}}>
+            <input
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Enter your full name"
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 20,
+                border: '1px solid #ccc',
+                outline: 'none',
+                fontSize: 16,
+                marginBottom: 16
+              }}
+            />
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 20,
+                border: '1px solid #ccc',
+                outline: 'none',
+                fontSize: 16,
+                marginBottom: 16
+              }}
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 20,
+                border: '1px solid #ccc',
+                outline: 'none',
+                fontSize: 16,
+                marginBottom: 16
+              }}
+            />
+            <input
+              type="tel"
+              value={mobile}
+              onChange={e => setMobile(e.target.value)}
+              placeholder="Enter your mobile number"
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 20,
+                border: '1px solid #ccc',
+                outline: 'none',
+                fontSize: 16,
+                marginBottom: 16
+              }}
+            />
+            <textarea
+              value={address}
+              onChange={e => setAddress(e.target.value)}
+              placeholder="Enter your address"
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 20,
+                border: '1px solid #ccc',
+                outline: 'none',
+                fontSize: 16,
+                marginBottom: 16,
+                minHeight: 80,
+                resize: 'vertical'
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+                padding: '10px 0',
+                borderRadius: 20,
+                border: 'none',
+                background: '#4f8cff',
+                color: '#fff',
+                fontWeight: 'bold',
+                fontSize: 16,
+                cursor: 'pointer',
+                marginBottom: 10
+              }}
+            >
+              Register
+            </button>
+          </form>
+        )}
+        
+        {loginError && (
+          <div style={{color: loginError.includes('successful') ? 'green' : 'red', marginTop: 12, fontSize: 15}}>
+            {loginError}
+          </div>
+        )}
+        
+        <button
+          onClick={() => {
+            setIsLogin(!isLogin);
+            setLoginError('');
+          }}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: '#4f8cff',
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            marginTop: 10
+          }}
+        >
+          {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
+        </button>
       </div>
     );
   }

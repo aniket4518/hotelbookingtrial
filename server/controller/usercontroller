@@ -8,7 +8,7 @@ const userctrl = {
             const { name, email, password } = req.body;
 
             // Validate input
-            if (!name || !email || !password) {
+            if (!name || !email || !password ||!address || !mobile) {
                 return res.status(400).json({ msg: "All fields are required." });
             }
 
@@ -22,7 +22,7 @@ const userctrl = {
             const hashedPassword = await bcrypt.hash(password, 9);
 
             // Create a new user
-            const newUser = new users({ name, email, password: hashedPassword });
+            const newUser = new users({ name, email, password: hashedPassword, address, mobile });
 
             // Save the user to the database
             await newUser.save();
