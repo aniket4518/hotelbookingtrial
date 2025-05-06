@@ -1,0 +1,24 @@
+ 
+
+.video-container {
+  width: 100%;
+  height: 100vh;
+  background-color:rgba(127, 255, 212, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.video-inner-container {
+  width: 80%;
+  height: 70%;
+  background-color: #eae6e5;
+  border-radius: 50px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  transform: translateY(-14.28%);
+}

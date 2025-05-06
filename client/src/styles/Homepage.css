@@ -1,0 +1,88 @@
+.homepage-container {
+  min-height: calc(100vh - 40px);
+  width: 100%;
+  background: linear-gradient(to right, #d3dcf5, #cadbf4, #d7f4ca);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  margin-top: 8vh;
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4a5568;
+  letter-spacing: 0.025em;
+  margin-bottom: 1rem;
+}
+
+.main-heading {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.highlight {
+  color: #2b6cb0;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+}
+
+.get-started-button {
+  padding: 0.75rem 2rem;
+  background-color: #3182ce;
+  color: white;
+  font-weight: 500;
+  border-radius: 9999px;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.get-started-button:hover {
+  background-color: #2b6cb0;
+  transform: scale(1.05);
+}
+
+.get-started-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.5);
+}
+
+.disclaimer {
+  font-size: 0.875rem;
+  color: #718096;
+  margin-top: 1rem;
+}
+
+/* Media queries for responsive design */
+@media (min-width: 640px) {
+  .main-heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .main-heading {
+    font-size: 6rem;
+  }
+  
+  .description {
+    font-size: 1.25rem;
+  }
+}
