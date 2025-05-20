@@ -44,7 +44,10 @@ async function scrapeBooking({ userId, UserModel }) {
         const price = priceMatch ? parseInt(priceMatch[1].replace(/,/g, "")) : null;
         return { name, price, link };
       });
+      
     });
+        console.log("Hotels found:", hotels);
+
   } catch (err) {
     // If property cards are not found, check if the search form is present (means no results page)
     const searchBoxExists = await page.$('input[name="ss"]');

@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken');
 const userctrl = {
     register: async (req, res) => {
         try {
-            const { name, email, password } = req.body;
+            const { name, email, password} = req.body;
 
             // Validate input
-            if (!name || !email || !password ||!address || !mobile) {
+            if (!name || !email || !password) {
                 return res.status(400).json({ msg: "All fields are required." });
             }
 
@@ -22,7 +22,7 @@ const userctrl = {
             const hashedPassword = await bcrypt.hash(password, 9);
 
             // Create a new user
-            const newUser = new users({ name, email, password: hashedPassword, address, mobile });
+            const newUser = new users({ name, email, password: hashedPassword});
 
             // Save the user to the database
             await newUser.save();

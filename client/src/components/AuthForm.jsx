@@ -5,8 +5,6 @@ const AuthForm = ({ onLoginSuccess }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [address, setAddress] = useState('');
   const [loginError, setLoginError] = useState('');
 
   const handleLogin = async (e) => {
@@ -40,7 +38,7 @@ const AuthForm = ({ onLoginSuccess }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || !password.trim() || !mobile.trim() || !address.trim()) {
+    if (!name.trim() || !email.trim() || !password.trim() ) {
       setLoginError('All fields are required');
       return;
     }
@@ -53,8 +51,6 @@ const AuthForm = ({ onLoginSuccess }) => {
           name: name.trim(), 
           email: email.trim(), 
           password: password,
-          mobile: mobile.trim(),
-          address: address.trim()
         })
       });
       const data = await res.json();
@@ -64,8 +60,6 @@ const AuthForm = ({ onLoginSuccess }) => {
         setName('');
         setEmail('');
         setPassword('');
-        setMobile('');
-        setAddress('');
         setLoginError('Registration successful! Please login.');
         setIsLogin(true); // Switch to login form
       } else {
@@ -166,19 +160,7 @@ const AuthForm = ({ onLoginSuccess }) => {
             placeholder="Enter your password"
             style={inputStyle}
           />
-          <input
-            type="tel"
-            value={mobile}
-            onChange={e => setMobile(e.target.value)}
-            placeholder="Enter your mobile number"
-            style={inputStyle}
-          />
-          <textarea
-            value={address}
-            onChange={e => setAddress(e.target.value)}
-            placeholder="Enter your address"
-            style={{...inputStyle, minHeight: 80, resize: 'vertical'}}
-          />
+
           <button type="submit" style={buttonStyle}>
             Register
           </button>
