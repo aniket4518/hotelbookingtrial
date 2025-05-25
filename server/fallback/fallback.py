@@ -7,6 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from serpapi.google_search import GoogleSearch
 import argparse
 import json
+import sys
 
 load_dotenv()
 def fetch_hotels(query: str):
@@ -94,6 +95,7 @@ if __name__ == "__main__":
             print(json.dumps([]))
         else:
             result = organize_with_gemini(hotels, args.user_pref)
+            print("RAW LLM OUTPUT:", repr(result), file=sys.stderr)
             # Convert bullet list to structured data
             hotel_data = []
             lines = result.strip().split('\n')
